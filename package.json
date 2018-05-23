@@ -46,7 +46,7 @@
     "start": "npm run test --silent; ./node_modules/.bin/chokidar \"test/*.js\" \"*.js\" -c 'npm run test --silent' --silent"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "http://npm.megoplan.ru"
   },
   "repository": {
     "type": "git",
