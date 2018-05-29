@@ -27,10 +27,11 @@
          2. Awaits instance-ID/token refresh requests from the GCM and invokes the Instance-ID listener service.
          -->
         <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:name=".gcm.mGcmBroadcastReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
+
+            <intent-filter android:priority="100">
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <category android:name="${applicationId}" />
@@ -39,6 +40,7 @@
         <!-- Dispatched by the GcmReceiver when messages are received. -->
         <service
             android:name="com.wix.reactnativenotifications.gcm.GcmMessageHandlerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -47,12 +49,14 @@
         <!-- Dispatched by the GcmReceiver. Starts the designated refresh-handling service. -->
         <service
             android:name=".gcm.GcmInstanceIdListenerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:name=".gcm.GcmInstanceIdRefreshHandlerService"
             android:exported="false" />
     </application>
