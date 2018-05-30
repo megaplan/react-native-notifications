@@ -19,6 +19,8 @@ import static com.wix.reactnativenotifications.Defs.TOKEN_RECEIVED_EVENT_NAME;
 
 public class GcmToken implements IGcmToken {
 
+    public static final String GCM_SENDER_ID = "gcm_sender_id";
+
     final protected Context mAppContext;
 
     protected static String sToken;
@@ -101,21 +103,19 @@ public class GcmToken implements IGcmToken {
     }
 
     protected String getSenderId() {
-        final String senderId = getSenderIdFromManifest();
+        final String senderId = getSenderIdFromResources();
         if (senderId == null) {
-            throw new IllegalStateException("Sender ID not found in manifest. Did you forget to add it as the value of a '"+GCM_SENDER_ID_ATTR_NAME+"' meta-data field?");
+            throw new IllegalStateException("Sender ID not found in manifest. Did you forget to add it as the value of a '"+GCM_SENDER_ID+"' string?");
         }
-        return senderId.substring(0, senderId.length() - 1);
+        return senderId;
     }
 
-    protected String getSenderIdFromManifest() {
-        final ApplicationInfo appInfo;
+    protected String getSenderIdFromResources() {
+        int resId = mAppContext.getResources().getIdentifier(GCM_SENDER_ID, "string", mAppContext.getPackageName());
         try {
-            appInfo = mAppContext.getPackageManager().getApplicationInfo(mAppContext.getPackageName(), PackageManager.GET_META_DATA);
-            return appInfo.metaData.getString(GCM_SENDER_ID_ATTR_NAME);
-        } catch (PackageManager.NameNotFoundException e) {
-            // Should REALLY never happen cause we're querying for our own package.
-            Log.e(LOGTAG, "Failed to resolve sender ID from manifest", e);
+            return mAppContext.getResources().getString(resId);
+        } catch (Exception e) {
+            Log.e(LOGTAG, "Failed to resolve sender ID", e);
             return null;
         }
     }
