@@ -165,7 +165,7 @@ public class PushNotification implements IPushNotification {
         return (int) System.nanoTime();
     }
 
-    private void notifyReceivedToJS() {
+    public void notifyReceivedToJS() {
         mJsIOHelper.sendEventToJS(NOTIFICATION_RECEIVED_EVENT_NAME, mNotificationProps.asBundle(), mAppLifecycleFacade.getRunningReactContext());
     }
 
