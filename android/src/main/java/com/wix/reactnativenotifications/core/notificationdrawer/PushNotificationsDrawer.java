@@ -31,6 +31,16 @@ public class PushNotificationsDrawer implements IPushNotificationsDrawer {
     }
 
     @Override
+    public void onAppInit() {
+        //clearAll();
+    }
+
+    @Override
+    public void onAppVisible() {
+        //clearAll();
+    }
+
+    @Override
     public void onNewActivity(Activity activity) {
         boolean launchIntentsActivity = mAppLaunchHelper.isLaunchIntentsActivity(activity);
         boolean launchIntentOfNotification = mAppLaunchHelper.isLaunchIntentOfNotification(activity.getIntent());
@@ -41,7 +51,7 @@ public class PushNotificationsDrawer implements IPushNotificationsDrawer {
 
     @Override
     public void onNotificationOpened() {
-        clearAll();
+        //clearAll();
     }
 
     @Override
